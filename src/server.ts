@@ -14,7 +14,11 @@ app.use(express.json());
 // Stateless per-request: create a new McpServer + transport for each POST.
 // No server-initiated messages needed for portfolio tools, so stateless is fine.
 
-const authMiddleware = createAuthMiddleware({ validateKey, getUserId });
+const authMiddleware = createAuthMiddleware({
+  validateKey,
+  getUserId,
+  upstreamToken: process.env.MCPIZE_UPSTREAM_TOKEN,
+});
 
 app.post("/mcp", authMiddleware, async (req, res) => {
   const { userId, tier } = req as AuthedRequest;
