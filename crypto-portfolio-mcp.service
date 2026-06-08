@@ -1,0 +1,25 @@
+[Unit]
+Description=Crypto Portfolio MCP Server
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/crypto-portfolio-mcp
+EnvironmentFile=/opt/crypto-portfolio-mcp/.env
+ExecStart=/usr/bin/node dist/server.js
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=crypto-portfolio-mcp
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/crypto-portfolio-mcp/data
+
+[Install]
+WantedBy=multi-user.target
